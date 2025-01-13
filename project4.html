@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Items Purchased</title>
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Items Purchased</h1>
+        <button id="showTable" class="btn btn-primary">Click Here</button>
+        <div id="tableContainer" class="mt-3" style="display:none;"></div>
+    </div>
+
+    <script>
+        var items = [
+            {item: 'boogie board', cost: 15.99, quantity: 3},
+            {item: 'shark-tooth necklace', cost: 10.99, quantity: 1},
+            {item: 'inflatable alligator', cost: 12.99, quantity: 2},
+            {item: 'flip flops', cost: 16.99, quantity: 1},
+            {item: 'beach towel', cost: 10.99, quantity: 2},
+            {item: 'goggles', cost: 8.99, quantity: 2}
+        ];
+
+        document.getElementById('showTable').onclick = function() {
+            generateTable();
+        };
+
+        function generateTable() {
+            var tableContainer = document.getElementById('tableContainer');
+            tableContainer.innerHTML = "";
+
+            var table = document.createElement('table');
+            table.className = 'table'; 
+            var thead = document.createElement('thead');
+            var tbody = document.createElement('tbody');
+
+            var headerRow = document.createElement('tr');
+            var headers = ['Item', 'Cost', 'Quantity', 'Subtotal'];
+            headers.forEach(function(header) {
+                var th = document.createElement('th');
+                th.innerText = header;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            items.forEach(function(item) {
+                var row = document.createElement('tr');
+                var subtotal = (item.cost * item.quantity).toFixed(2);
+
+                var itemCell = document.createElement('td');
+                itemCell.innerText = item.item;
+                row.appendChild(itemCell);
+
+                var costCell = document.createElement('td');
+                costCell.innerText = `$${item.cost.toFixed(2)}`;
+                row.appendChild(costCell);
+
+                var quantityCell = document.createElement('td');
+                quantityCell.innerText = item.quantity;
+                row.appendChild(quantityCell);
+
+                var subtotalCell = document.createElement('td');
+                subtotalCell.innerText = `$${subtotal}`;
+                row.appendChild(subtotalCell);
+
+                tbody.appendChild(row);
+            });
+
+            table.appendChild(tbody);
+            tableContainer.appendChild(table);
+            tableContainer.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
